@@ -1,25 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import Navbar from './Navbar';
+import Home from './Home';
+import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
+import Create from './Create';
+import BlogDetails from './BlogDetails';
 
 function App() {
+
+  //const title = 'Welcome to the new blog';
+  const likes =50;
+
+  const link ="https://youtube.com"
+
+  //switch component make sure only 1 route show at any 1 time
+  //Route path is the path after the url
+
+
   return (
+    <Router>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar/>
+      <div className="content">
+        <Switch>   
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/create">
+            <Create />
+          </Route>
+          <Route path="/blogs/id:">
+            <BlogDetails />
+          </Route>
+
+
+
+        </Switch>
+ 
+      </div>
+      
     </div>
+    </Router>
   );
 }
 
-export default App;
+export default App;  //always export component
