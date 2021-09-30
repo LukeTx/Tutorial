@@ -1,35 +1,55 @@
 import { useState } from "react";
+import {useHistory} from 'react-router-dom';
 
 const Create = () => {
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+  const [author, setAuthor] = useState('');
+  const history =useHistory();
 
-    const [title, setTitle] =useState("");
-    const [body, setBody] =useState("");
-    const [author, setArthor] =useState('mario');
-    return (
-      <div className="create">
-        <h2>New form</h2>
-        <form>
-            <label>Blog title : </label>
-            <input type="text" required  value = {title} onChange={(e) => setTitle(e.target.value)}/>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const blog = { title, body, author };
 
-            <label>Blog body : </label>
-            <textarea required value = {body} onChange={(e) => setBody(e.target.value)}></textarea>
-
-            <label>Blog author : </label>
-            <select
-            value={author}
-            onChange={(e) => setArthor(e.target.value)}
-            >
-                <option value="Johnny Sins">Johnny sins</option>
-                <option value="Mario">mario</option>
-            </select>
-        </form>
-        <button>Add button</button>
-
-      </div>
-
-
-    );
+    fetch('http://localhost:8000/blogs/', {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(blog)
+    }).then(() => {
+      console.log('new blog added');
+      history.push('/')
+    })
   }
-   
-  export default Create;
+
+  return (
+    <div className="create">
+      <h2>Add a New Blog</h2>
+      <form onSubmit={handleSubmit}>
+        <label>Blog title:</label>
+        <input 
+          type="text" 
+          required 
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <label>Blog body:</label>
+        <textarea
+          required
+          value={body}
+          onChange={(e) => setBody(e.target.value)}
+        ></textarea>
+        <label>Blog author:</label>
+        <input 
+          type="text" 
+          required 
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+        />
+        
+        <button>Add Blog</button>
+      </form>
+    </div>
+  );
+}
+ 
+export default Create;
