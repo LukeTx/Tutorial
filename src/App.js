@@ -7,9 +7,6 @@ import BlogDetails from './BlogDetails';
 function App() {
 
   //const title = 'Welcome to the new blog';
-  const likes =50;
-
-  const link ="https://youtube.com"
 
   //switch component make sure only 1 route show at any 1 time
   //Route path is the path after the url
@@ -27,7 +24,7 @@ function App() {
           <Route path="/create">
             <Create />
           </Route>
-          <Route path="/blogs/id:">
+          <Route path="/blogs/:id">
             <BlogDetails />
           </Route>
 
